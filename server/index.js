@@ -66,8 +66,10 @@ app.get('/api', (req, res) => {
 });
 
 app.get('/api/wxJssdk', (req, res) => {
+  console.log(req.headers.referer);
+
   let
-    _getUrl = req => req.protocol + '://' + req.headers.host + req.originalUrl.split('#')[0]
+    _getUrl = req => req.headers.referer.split('#')[0]
   ;
 
   wxjssdk({
