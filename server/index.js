@@ -13,6 +13,10 @@ let
 app.use('/static', express.static(path.resolve('static')));
 
 // set api
+app.get('/api', (req, res) => {
+  res.send('mock api');
+});
+
 app.get('/api/wxJssdk', (req, res) => {
   let
     _getUrl = req => req.protocol + '://' + req.headers.host + req.originalUrl.split('#')[0]
