@@ -12,7 +12,7 @@ let
 
 const token = 'cycjimmy';
 
-let handleWechatRequst = (req, res, next) => {
+let handleWechatTestRequst = (req, res, next) => {
   let
     {signature, timestamp, nonce, echostr} = req.query
   ;
@@ -56,6 +56,9 @@ let handleWechatRequst = (req, res, next) => {
   }
 };
 
+let handleWechatRequst = (req, res, next) => {
+  res.send('wxVerify');
+};
 
 // static
 app.use('/static', express.static(path.resolve('static')));
@@ -83,6 +86,10 @@ app.get('/api/wxJssdk', (req, res) => {
       res.send(err);
     });
 });
+
+// wxtestVerify
+app.get('/api/wxtestVerify', handleWechatTestRequst);
+app.post('/api/wxtestVerify', handleWechatTestRequst);
 
 // wxVerify
 app.get('/api/wxVerify', handleWechatRequst);
