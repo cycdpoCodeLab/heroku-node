@@ -12,7 +12,7 @@ let
 
 const token = 'cycjimmy';
 
-let handleWechatTestRequst = (req, res, next) => {
+let handleWechatRequst = (req, res, next) => {
   let
     {signature, timestamp, nonce, echostr} = req.query
   ;
@@ -56,12 +56,8 @@ let handleWechatTestRequst = (req, res, next) => {
   }
 };
 
-let handleWechatRequst = (req, res, next) => {
-  res.send('wxVerify');
-};
-
 // static
-app.use('/static', express.static(path.resolve('static')));
+app.use('/', express.static(path.resolve('static')));
 
 // set api
 app.get('/api', (req, res) => {
@@ -87,13 +83,29 @@ app.get('/api/wxJssdk', (req, res) => {
     });
 });
 
-// wxtestVerify
-app.get('/api/wxtestVerify', handleWechatTestRequst);
-app.post('/api/wxtestVerify', handleWechatTestRequst);
-
 // wxVerify
 app.get('/api/wxVerify', handleWechatRequst);
 app.post('/api/wxVerify', handleWechatRequst);
+
+// test api
+app.get('/api/test/wxJssdk', (req, res) => {
+  console.log(req.headers.referer);
+
+  let
+    _getUrl = req => req.headers.referer.split('#')[0]
+  ;
+
+  wxjssdk({
+    appid: 'wxcc6445076f2002c3',
+    secret: 'd4624c36b6795d1d99dcf0547af5443d',
+    url: _getUrl(req)
+  })
+    .then(data => {
+      res.send(data);
+    }, (err) => {
+      res.send(err);
+    });
+});
 
 app.listen(port, () => {
   console.log('App is listening at port ' + port + '!');
