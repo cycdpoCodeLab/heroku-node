@@ -57,7 +57,7 @@ let handleWechatRequst = (req, res, next) => {
 };
 
 // static
-app.use('/', express.static(path.resolve('static')));
+app.use('/static', express.static(path.resolve('static')));
 
 // set api
 app.get('/api', (req, res) => {
